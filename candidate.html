@@ -3,54 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="app.css">
+
     <title>CandidateApp</title>
     <script src="bower_components/angular/angular.js"></script>
-    <style>
-        .createCandidate{
-            background-color: antiquewhite;
-            width:45%;
-            padding:2em;
-        }
-        .candidateList{
-            margin-top: 2em;
-            background-color: lavender;
-            padding:2em;
-        }
-    </style>
-    <script>
-        var app=angular.module('candidateApp',[]);
 
-    </script>
+    <script src="app.js"></script>
+
 </head>
-<body>
+<body ng-controller="mainController" ng-app="candidateApp" ng-init="listCandidates()">
 
 <div class="createCandidate">
-    <form name="form" ng-app="candidateApp" novalidate>
+    <form name="form" ng-submit="submitForm(form.$valid)"  novalidate>
         <h1>Create a Candidate</h1>
-        Name:<br>
-        <Input type="text" name="name" ng-model="name" size="40" required>
-        <span style="color:red" ng-show="form.name.$dirty && form.name.$invalid">
-            <span ng-show="form.name.$error.required">Candidate name is required!</span>
+        First Name:<br>
+        <Input type="text" ng-model="user.name.first" size="40" required>
+        <span style="color:red" ng-show="form.first.$dirty && form.first.$invalid">
+            <span ng-show="form.first.$error.required">Candidate first name is required!</span>
+        </span><br>
+        Last Name:<br>
+        <Input type="text" ng-model="user.name.last" size="40" required>
+        <span style="color:red" ng-show="form.last.$dirty && form.last.$invalid">
+            <span ng-show="form.last.$error.required">Candidate last name is required!</span>
         </span><br>
         Email:<br>
-        <Input type="text" name="email" ng-model="email" size="40" required>
+        <Input type="text" ng-model="user.email" size="40" required>
         <span style="color:red" ng-show="form.email.$dirty && form.email.$invalid">
         <span ng-show="form.email.$error.required">Candidate email is required!</span>
         </span>
         <br>
         Github link:<br>
-        <Input type="text" name="github" ng-model="githubLink" size="40" required>
+        <Input type="text" ng-model="user.github" size="40" required>
         <span style="color:red" ng-show="form.github.$dirty && form.github.$invalid">
         <span ng-show="form.github.$error.required">Candidate Github Link is required!</span>
         </span>
         <br>
         Linkedin link:<br>
-        <Input type="text" name="linkedin" ng-model="linkedinLink" size="40" required>
+        <Input type="text" ng-model="user.linkedin" size="40" required>
         <span style="color:red" ng-show="form.linkedin.$dirty && form.linkedin.$invalid">
         <span ng-show="form.linkedin.$error.required">Candidate LinkedIn Link is required!</span>
         </span>
         <br>
-        <input type="submit">
+        <button type="submit">Submit</button>
     </form>
 </div>
 
@@ -58,16 +52,23 @@
     <h1>List of Candidates</h1>
     <table>
         <tr>
-            <th>Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Email</th>
             <th>Github Link</th>
             <th>LinkedIn Link</th>
         </tr>
-        <tr>
-            <td>Manali</td>
-            <td>manali8787@gmail.com</td>
-            <td>https://github.com/manali8785/</td>
-            <td>https://www.linkedin.com/in/manalinirhali</td>
+        <tr ng-repeat="cand in candidates">
+            <td ><input type="text" ng-disabled="!cand.edit"  ng-model="cand.name.first"></td>
+            <td><input type="text" ng-disabled="!cand.edit"  ng-model="cand.name.last"></td>
+            <td><input type="text" ng-disabled="!cand.edit"  ng-model="cand.email"></td>
+            <td><input type="text"  ng-disabled="!cand.edit" ng-model="cand.github"></td>
+            <td><input type="text" ng-disabled="!cand.edit"  ng-model="cand.linkedin"></td>
+            <td class="button">
+                <button ng-hide="cand.edit" type="button" ng-click="cand.edit = !cand.edit;">Edit</button>
+                <button ng-show="cand.edit" type="button" ng-click="cand.edit = !cand.edit; save(cand)">Save</button>
+                <button type="button" ng-click="">Delete</button>
+            </td>
         </tr>
     </table>
 </div>

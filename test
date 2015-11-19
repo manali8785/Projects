@@ -1,0 +1,9 @@
+saveFriend: function(friend){
+   return $q(function(resolve,reject){
+       $http.put("/users/" + _user.id + "/friends", friend).then(function(config){
+           resolve(config.data.friends);
+       }, function(config){
+           reject(config);
+       });
+   });
+},

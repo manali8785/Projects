@@ -1,0 +1,25 @@
+.createCandidate{
+    background-color: #eeeeee;
+    width:45%;
+    padding:1em;
+}
+.candidateList{
+    margin-top: 1em;
+    background-color: #eeeeee;
+    padding:1em;
+}
+td{
+    white-space: nowrap;
+    width: 3.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+td.button{
+    width: 4em;
+
+}
+table{
+    width:50em;
+    table-layout: fixed;
+    border: 2px solid brown;
+}
